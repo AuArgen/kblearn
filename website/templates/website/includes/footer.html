@@ -1,0 +1,19 @@
+{% block content %}
+<script>
+if (document.querySelector(".categoriaActive")) {
+    document.querySelector(".categoriaActive").onclick = () => {
+        document.querySelector(".autoDevice").classList.toggle("autoDeviceActive")
+    }
+}
+</script>
+<footer class="row p-4 shadow  bg-white rounded border">
+    <div class="col text-center fs-6">
+      <!-- <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href=""></use></svg>
+      </a> -->
+      compcenter2023@gmail.com / University OshMU
+    </div>
+
+  </footer>
+
+    {% endblock%}

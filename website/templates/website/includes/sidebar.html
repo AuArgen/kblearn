@@ -1,0 +1,115 @@
+
+{% block content %}
+<style>
+.a1rem {
+    font-size:1rem;
+}
+</style>
+    <div class="col-xxl-3 col-xl-3 col-md-3  autoDevice bg-light shadow  mb-5 rounded " style=" height: 100vh; padding-top:30px ">
+        <main class="d-flex flex-nowrap overflow-auto" style="height: 100vh;width: 100%; overflow-x:auto ">
+            <div class="flex-shrink-0 " style="width: 100%; ">
+
+                <ul class=" btn-toggle-nav list-unstyled   border rounded" style="width: 100%; ">
+                    {% for raz in razs %}
+                        <li style="width: 100%; ">
+                            <a class=" btn btn-toggle a1rem "
+                               data-bs-toggle="collapse"
+                               data-bs-target="#home-collapse{{ raz.id }}" aria-expanded="false">
+                                {{ raz.name }}
+                            </a>
+                            <div class="collapse border border-info border-start-0 rounded-end"
+                                 id="home-collapse{{ raz.id }}" style="width: 100%; ">
+                                <ul class="btn-toggle-nav list-unstyled" style="width: 100%; ">
+                                    {% for glav in glavs %}
+                                        {% if raz.id == glav.razdel_id %}
+                                            <li class="" style="width: 100%; ">
+                                                <a class="fs-6  btn btn-toggle a1rem  "
+                                                   data-bs-toggle="collapse"
+                                                   data-bs-target="#home-collapse{{ raz.id }}_{{ glav.id }}"
+                                                   aria-expanded="false">
+                                                    {{ glav.name }}
+                                                </a>
+                                                <div class="collapse border border-success border-start-0 rounded-end"
+                                                     id="home-collapse{{ raz.id }}_{{ glav.id }}">
+                                                    <ul class=" btn-toggle-nav list-unstyled ">
+                                                        {% for them in dataTheme %}
+                                                            {% if glav.id == them.id_glav_id %}
+
+                                                                    {% for dName in dNames %}
+                                                                    <li style="display:flex; border-bottom:1px solid gray; padding:2px;" class="openLink{{them.id}}_{{dName.id}}" onclick="openPage({{ raz.id }}, {{ glav.id }}, {{them.id}}, {{dName.id}})">
+                                                                        <b><a class="aaa "
+                                                                           href="{% url 'them_cat' dName.id them.id %}">
+                                                                            {{ them.theme }}
+                                                                        </a></b>
+                                                                        <br>
+                                                                        </li>
+                                                                    {% endfor %}
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+
+
+{#            Новости#}
+                <!-- <div class="card p-2 bg-dark border">
+                    <center><h1 class="text-light">Новости</h1></center>
+                    <img src="https://i.mycdn.me/i?r=AyH4iRPQ2q0otWIFepML2LxRwtxfvb7anJVtLgwts3G5JQ" alt="">
+                    <h4 class="text-light">Новые новости сайта</h4>
+                    <a class="btn btn-light " href="">Читать далее</a>
+                </div>
+               <div class="card p-2 bg-dark border">
+                    <center><h1 class="text-light">Новости</h1></center>
+                    <img src="https://i.mycdn.me/i?r=AyH4iRPQ2q0otWIFepML2LxRwtxfvb7anJVtLgwts3G5JQ" alt="">
+                    <h4 class="text-light">Новые новости сайта</h4>
+                    <a class="btn btn-light " href="">Читать далее</a>
+                </div>
+               <div class="card p-2 bg-dark border">
+                    <center><h1 class="text-light">Новости</h1></center>
+                    <img src="https://i.mycdn.me/i?r=AyH4iRPQ2q0otWIFepML2LxRwtxfvb7anJVtLgwts3G5JQ" alt="">
+                    <h4 class="text-light">Новые новости сайта</h4>
+                    <a class="btn btn-light " href="">Читать далее</a>
+                </div> -->
+
+
+
+            </div>
+
+
+        </main>
+    </div>
+    <script>
+        function openPage(a,b,c,d) {
+            let x = a + "/" + b + "/" + c + "/" + d
+            localStorage.setItem("dateKB", x)
+
+        }
+        function showSlideBar() {
+            let r = (location.href).split("/")
+
+            if (localStorage.getItem("dateKB")) {
+                let x = localStorage.getItem("dateKB")
+                x = x.split("/")
+                if (+x[2] == +r[r.length-1] && x[3] == r[r.length-2]){
+                    document.querySelector(`#home-collapse${x[0]}`).classList.toggle("show")
+                    document.querySelector(`#home-collapse${x[0]}_${x[1]}`).classList.toggle("show")
+                    document.querySelector(`.openLink${x[2]}_${x[3]} .aaa`).classList.toggle("text-secondary")
+                }
+            }
+
+
+        }
+
+    </script>
+
+{% endblock %}
